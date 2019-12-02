@@ -1,0 +1,413 @@
+@author Citlalli
+ */
+public class Batalla {
+    public static final String ANSI_RED = "\u001B[31m";
+    public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_GREEN = "\u001B[32m";
+    public static final String ANSI_YELLOW = "\u001B[33m";
+    public static final String ANSI_BLUE = "\u001B[34m";
+    public static final String ANSI_PURPLE = "\u001B[35m";
+    public static final String ANSI_CYAN = "\033[36m";
+    
+   void imprimirDestapar(int[][] destapar,int nivelSeleccionado){
+        if(nivelSeleccionado==1){
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 10; j++) {
+                System.out.print(" "+destapar[i][j]+" ");
+            }
+            System.out.println("");
+        }
+       
+    }
+        if(nivelSeleccionado==2){
+           for (int i = 0; i < 20; i++) {
+            for (int j = 0; j < 20; j++) {
+                System.out.print(" "+destapar[i][j]+" ");
+            }
+            System.out.println("");
+        } 
+        }
+        if(nivelSeleccionado==3){
+             for (int i = 0; i < 30; i++) {
+            for (int j = 0; j < 30; j++) {
+                System.out.print(" "+destapar[i][j]+" ");
+            }
+            System.out.println("");
+        }
+        }
+    }
+    void rendirse(int[][] juego,int[][] destapar,int nivelSeleccionado){
+        if(nivelSeleccionado==1){
+        String titColumnas;
+               titColumnas="  0 1 2 3 4 5 6 7 8 9";
+            System.out.println(titColumnas); 
+        for (int i = 0; i < 10; i++) {
+             System.out.print(i+" ");
+            for (int j = 0; j < 10; j++) {
+         
+                if(destapar[i][j]==8){
+                    System.out.print(ANSI_PURPLE+"X "+ANSI_RESET); 
+                }else{
+                    System.out.print(ANSI_BLUE+"O "+ANSI_RESET); 
+                }
+            }
+            System.out.println("");
+        }
+    }
+        if(nivelSeleccionado==2){
+        String titColumnas;
+              titColumnas="   0  1  2  3  4  5  6  7  8  9  10 11 12 13 14 15 16 17 18 19";
+                System.out.println(titColumnas);        
+        for (int i = 0; i < 20; i++) {
+             System.out.print(i+" ");
+            for (int j = 0; j < 20; j++) {
+         
+                if(destapar[i][j]==8){
+                    System.out.print(ANSI_PURPLE+" X "+ANSI_RESET); 
+                }else{
+                    System.out.print(ANSI_BLUE+" O "+ANSI_RESET); 
+                }
+            }
+            System.out.println("");
+        }
+    }
+        if(nivelSeleccionado==3){
+        String titColumnas;
+                titColumnas="   0  1  2  3  4  5  6  7  8  9  10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 ";
+                    System.out.println(titColumnas);        
+        for (int i = 0; i < 30; i++) {
+             System.out.print(i+" ");
+            for (int j = 0; j < 30; j++) {
+         
+                if(destapar[i][j]==8){
+                    System.out.print(ANSI_PURPLE+" X "+ANSI_RESET); 
+                }else{
+                    System.out.print(ANSI_BLUE+" O "+ANSI_RESET); 
+                }
+            }
+            System.out.println("");
+        }
+    }
+    }
+    
+    
+    
+    
+    int max(int num1,int num2){
+        int num;
+        if(num1>num2){
+            num=num1;
+        }else{
+            num=num2;
+        }
+        return num;
+    }
+    
+    int min(int num1, int num2){
+        int num;
+        if(num1<num2){
+            num=num1;
+        }else{
+            num=num2;
+        }        
+        return num;
+    }
+     void inicializarTablero(int[][] tablero,Boolean[][] visible,int nivelSeleccionado,int[][] rendirse){
+        int fila,columna;
+        if(nivelSeleccionado==1){
+            for (fila = 0; fila < 10;fila ++) {       
+                for (columna = 0; columna  < 10; columna ++) {
+                    tablero[fila][columna]=0;
+                }
+            }        
+            ponerBarcos(tablero,nivelSeleccionado,rendirse);
+            for (fila = 0; fila  < 10; fila ++) {          
+                for (columna = 0; columna  < 10; columna ++) {              
+                    visible[fila][columna]=false; 
+                }
+            }             
+        }else{
+            if(nivelSeleccionado==2){
+                for (fila = 0; fila < 20;fila ++) {       
+                    for (columna = 0; columna  < 20; columna ++) {
+                        tablero[fila][columna]=0;
+                    }
+                }        
+                ponerBarcos(tablero,nivelSeleccionado,rendirse);
+                for (fila = 0; fila  < 20; fila ++) {          
+                    for (columna = 0; columna  < 20; columna ++) {              
+                        visible[fila][columna]=false;
+                    }
+                }                 
+            }else{
+                if(nivelSeleccionado==3){
+                    for (fila = 0; fila < 30;fila ++) {       
+                        for (columna = 0; columna  < 30; columna ++) {
+                            tablero[fila][columna]=0;
+                        }
+                    }        
+                    ponerBarcos(tablero,nivelSeleccionado,rendirse);
+                    for (fila = 0; fila  < 30; fila ++) {          
+                        for (columna = 0; columna  < 30; columna ++) {              
+                            visible[fila][columna]=false;
+                        }
+                    }                     
+                }
+            }
+        } 
+    }
+    
+    void ponerBarcos(int[][] tablero,int nivelSeleccionado,int[][] rendirse){      
+        int numBarcos,fila,columna,fila2,columna2;
+        numBarcos=0;
+        int a=0,c=0;
+   columna = (int)(0 + Math.random()*10);
+      //  System.out.println("columna"+columna);
+     int[]f=aleatorioFilas(9);
+        if(nivelSeleccionado==1){
+            while(numBarcos<9){     
+              //     System.out.println("coordenadas aleatorias: "+f[a]+","+columna); 
+               do{
+                fila = (int)(0 + Math.random()*10);
+                columna = (int)(0 + Math.random()*10);
+              //     System.out.println("coordenadas aleatorias: "+fila+","+columna);
+               }while(tablero[fila][columna]==9);
+              tablero[fila][columna]=9;  
+              rendirse[fila][columna]=8;
+              //    System.out.println("coordenadas aleatorias: "+f[a]+","+columna);
+                for (fila2=max(0, fila-1);fila2<min(9,fila+1); fila2++){
+                    for(columna2=max(0,columna-1);columna2<min(9,columna+1);columna2++){
+                        if(tablero[fila2][columna2]!=9){
+                            tablero[fila2][columna2]=tablero[fila2][columna2]+1;
+                        }                    
+                    }
+                }
+                numBarcos=numBarcos+1;
+                  if(c%2==0){
+                    c=0;
+                    a++;
+                }
+             
+                c++;
+            //    System.out.println("columna"+columna);
+                 
+                 columna++;
+                 
+              
+            }//cierra el while               
+        }else{
+            if(nivelSeleccionado==2){
+                while(numBarcos<20){
+                  //  System.out.println("entra al while");
+                   do{
+                    fila = (int)(0 + Math.random()*20);
+                    columna = (int)(0 + Math.random()*20);
+                //       System.out.println("coordenadas aleatorias: "+fila+","+columna);
+                   }while(tablero[fila][columna]==9);
+                   tablero[fila][columna]=9;  
+                   rendirse[fila][columna]=8;
+                    for (fila2= max(0, fila-1);fila2<min(9,fila+1); fila2++){
+                        for(columna2=max(0,columna-1);columna2<min(9,columna+1);columna2++){
+                            if(tablero[fila2][columna2]!=9){
+                                tablero[fila2][columna2]=tablero[fila2][columna2]+1;
+                            }                    
+                        }
+                    }
+                    numBarcos=numBarcos+1;
+                }                
+            }else{
+                if(nivelSeleccionado==3){
+                    while(numBarcos<30){                    
+                       do{
+                        fila = (int)(0 + Math.random()*30);
+                        columna = (int)(0 + Math.random()*30);
+                      //    System.out.println("coordenadas aleatorias: "+fila+","+columna);
+                       }while(tablero[fila][columna]==9);
+                       tablero[fila][columna]=9; 
+                       rendirse[fila][columna]=8;
+                        for (fila2= max(0, fila-1);fila2<min(9,fila+1); fila2++){
+                            for(columna2=max(0,columna-1);columna2<min(9,columna+1);columna2++){
+                                if(tablero[fila2][columna2]!=9){
+                                    tablero[fila2][columna2]=tablero[fila2][columna2]+1;
+                                }                    
+                            }
+                        }
+                        numBarcos=numBarcos+1;
+                    }//cierra el while                       
+                }
+            }
+        }
+        
+             
+    }
+    
+    void destaparCelda(int[][] tablero,Boolean[][] visible,int fila,int columna){
+        int fila2,columna2;
+        if(visible[fila][columna]==false){
+            visible[fila][columna]=true;
+            if(tablero[fila][columna]==0){
+                for (fila2 = max(0,fila-1); fila2 < min(9, fila+1);fila2++) {
+                    for (columna2 = max(0, columna-1); columna2< min(9,columna+1);columna2 ++) {
+                        if(tablero[fila2][columna2]!=9){
+                            destaparCelda(tablero, visible, fila2, columna2);
+                        }
+                    }                    
+                }
+            }
+        }        
+    }
+    
+    int contarCeldasDestapadas(Boolean[][] visible,int nivelSeleccionado){
+        int num,fila,columna;
+        num=0;
+        if(nivelSeleccionado==1){
+            for (fila = 0;fila< 10;fila ++) {
+                for (columna = 0; columna < 10; columna ++) {
+                    if(visible[fila][columna]){
+                        num=num+1;
+                    }
+                }
+            }            
+        }else{
+            if(nivelSeleccionado==2){
+                for (fila = 0;fila< 20;fila ++) {
+                    for (columna = 0; columna < 20; columna ++) {
+                        if(visible[fila][columna]){
+                            num=num+1;
+                        }
+                    }
+                }                
+            }else{
+                if(nivelSeleccionado==3){
+                    for (fila = 0;fila< 30;fila ++) {
+                        for (columna = 0; columna < 30; columna ++) {
+                            if(visible[fila][columna]){
+                                num=num+1;
+                            }
+                        }
+                    }                    
+                }
+            }
+        }
+        return num;
+    }
+    
+    int comprobarTablero(int[][] tablero,Boolean[][] visible, int fila, int columna,int nivelSeleccionado){
+        int resultado;
+        if(tablero[fila][columna]==9){
+            visible[fila][columna]=true;
+            resultado=-1;            
+        }else{
+            destaparCelda(tablero, visible, fila, columna);
+            resultado=contarCeldasDestapadas(visible,nivelSeleccionado);
+        }
+        return resultado;        
+    }
+    int[] aleatorioFilas(int tam) {
+   
+      //  int cantidad = palabras.length;
+        int arreglo[] = new int[9];
+        int aleatorio = 0;
+
+        for (int i = 0; i < 9; i++) {
+            aleatorio = (int) (Math.random() * tam);
+            arreglo[i] = aleatorio;
+        }
+        for (int k = 0; k < 9; k++) {
+            for (int m = 0; m < 9; m++) {
+                // System.out.println("compara "+arreglo[k]+" y "+arreglo[m]+" posicionArreglo: "+k+" y "+m);
+                if (arreglo[k] == arreglo[m] && k != m) {
+                    //System.out.println("entra");
+                    aleatorio = (int) (Math.random() * tam);
+                    arreglo[k] = aleatorio;
+                    k = 0;
+                }
+            }
+            
+        }
+        //for (int i = 0; i < 9; i++) {
+         //   System.out.println(arreglo[i]);  
+       // }
+       // System.out.println(");
+        return arreglo;
+    }
+   void abrir(int[][] tablero,Boolean[][] visible,int fila,int columna,int nivelSeleccionado){
+      
+      
+   }
+    void dibujarTablero(int[][] tablero,Boolean[][] visible,int nivelSelecionado){
+        int fila,columna;
+        String titColumnas;
+        if(nivelSelecionado==1){
+            titColumnas="  0 1 2 3 4 5 6 7 8 9";
+            System.out.println(titColumnas);              
+            for (fila = 0; fila < 10;fila ++) {
+                System.out.print(fila+" ");
+                for (columna = 0;columna  < 10;columna ++) {
+                    if(visible[fila][columna]){//si abres la casilla 
+                        if(tablero[fila][columna]==0){//cuando la celda no tiene ningun numero 
+                            System.out.print(ANSI_RED +"O "+ ANSI_RESET);//celda abierta
+                        }else{//si tiene un numero 
+                            if(tablero[fila][columna]==9){//si es una bomba el que abriste 
+                                System.out.print(ANSI_PURPLE+"X "+ANSI_RESET);                            
+                            }else{//si no es bomba el que abriste pero hay bombas alrededor 
+                                System.out.print(""+tablero[fila][columna]+" ");
+                            }
+                        }
+                    }else{
+                        System.out.print("- ");
+                    }                
+                }
+                System.out.println("");
+            }               
+        }else{
+            if(nivelSelecionado==2){
+                titColumnas="   0  1  2  3  4  5  6  7  8  9  10 11 12 13 14 15 16 17 18 19";
+                System.out.println(titColumnas);        
+                for (fila = 0; fila < 20;fila ++) {
+                    System.out.print(fila+" ");
+                    for (columna = 0;columna  < 20;columna ++) {
+                        if(visible[fila][columna]){
+                            if(tablero[fila][columna]==0){
+                                System.out.print(ANSI_RED +"O "+ ANSI_RESET);
+                            }else{
+                                if(tablero[fila][columna]==9){
+                                      System.out.print(ANSI_PURPLE+"X "+ANSI_RESET);                          
+                                }else{
+                                    System.out.print(+tablero[fila][columna]+"  ");
+                                }
+                            }
+                        }else{
+                            System.out.print(" - ");
+                        }                
+                    }
+                    System.out.println("");
+                }                   
+            }else{
+                if(nivelSelecionado==3){
+                   titColumnas="   0  1  2  3  4  5  6  7  8  9  10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 ";
+                    System.out.println(titColumnas);        
+                    for (fila = 0; fila < 30;fila ++) {
+                        System.out.print(fila+" ");
+                        for (columna = 0;columna  < 30;columna ++) {
+                            if(visible[fila][columna]){
+                                if(tablero[fila][columna]==0){
+                                     System.out.print(ANSI_RED +"O "+ ANSI_RESET);
+                                }else{
+                                    if(tablero[fila][columna]==9){
+                                         System.out.print(ANSI_PURPLE+"X "+ANSI_RESET);                             
+                                    }else{
+                                        System.out.print(tablero[fila][columna]+" ");
+                                    }
+                                }
+                            }else{
+                                System.out.print(" - ");
+                            }                
+                        }
+                        System.out.println("");
+                    }                     
+                }
+            }
+        }
+    }
+}
